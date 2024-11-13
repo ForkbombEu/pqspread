@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minimalistic Timeline - Alpine.js & Tailwind</title>
+    <script src="./vendor/alpine.js" defer></script>
+    <script src="./vendor/tailwind.js" defer></script>
+    <link href="./css/main.css" rel="stylesheet" />
+  </head>
+  <body class="bg-gray-50 font-serif">
+    <div
+      x-data="timelineData()"
+      class="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md mt-10"
+    >
+      <h1 class="monospace text-3xl font-black">PQChat</h1>
+      innovation by
+      <a href="https://forkbomb.solutions" class="font-bold monospace underline"
+        >FORKBOMB</a
+      >
+      <ol class="space-y-4 list-decimal list-inside mt-12">
+        <template x-for="(step, index) in steps" :key="index">
+          <li
+            :class="{'text-gray-500': index > currentStep, 'text-black': index === currentStep, 'text-gray-400': index < currentStep}"
+          >
+            <span
+              :class="{'text-gray-500': index > currentStep, 'text-black': index === currentStep, 'text-gray-400 line-through': index < currentStep}"
+              x-text="step.title"
+            ></span>
+            <div class="space-y-1 pl-4">
+              <!-- Display spinner or output for each step independently -->
+              <div class="text-sm pl-2">
+                <template x-if="loadingSteps[index]">
+                  <div class="spinner"></div>
+                </template>
+                <template x-if="!loadingSteps[index] && step.output">
+                  <div
+                    class="text-gray-600 monospace"
+                    x-text="step.output"
+                  ></div>
+                </template>
+              </div>
+
+              <!-- Next step link for the current step only, hidden after last step is completed -->
+              <template x-if="currentStep === index && !isLastStepCompleted">
+                <button
+                  @click="nextStep"
+                  class="text-blue-600 hover:underline text-sm mt-2 inline-flex"
+                >
+                  Next Step
+                </button>
+              </template>
+            </div>
+          </li>
+        </template>
+      </ol>
+    </div>
+
+    <script>
+      function timelineData() {
+        return {
+          steps: [
+            {
+              title: "Generate a Quantum Proof Keypair",
+              action: () =>
+                new Promise((resolve) =>
+                  setTimeout(() => resolve("Initialized!"), 1000),
+                ),
+              output: "",
+            },
+            {
+              title: "Publish your public key to did:dyne",
+              action: () =>
+                new Promise((resolve) =>
+                  setTimeout(() => resolve("Processing... Done!"), 2000),
+                ),
+              output: "",
+            },
+            {
+              title: "Send to you friend the secret emoji",
+              action: () =>
+                new Promise((resolve) =>
+                  setTimeout(() => resolve("Getting Close..."), 1500),
+                ),
+              output: "",
+            },
+            {
+              title: "Encrypt/Decrypt a message to her",
+              action: () =>
+                new Promise((resolve) =>
+                  setTimeout(() => resolve("Completed Successfully!"), 1200),
+                ),
+              output: "",
+            },
+          ],
+          currentStep: 0,
+          loadingSteps: [false, false, false, false], // Track loading state for each step
+          isLastStepCompleted: false,
+
+          // Move to the next step, execute action, handle loading/output state
+          async nextStep() {
+            this.loadingSteps[this.currentStep] = true;
+            const result = await this.steps[this.currentStep].action();
+            this.steps[this.currentStep].output = result;
+            this.loadingSteps[this.currentStep] = false;
+
+            // Move to the next step if available, otherwise mark as last step completed
+            if (this.currentStep < this.steps.length - 1) {
+              this.currentStep++;
+            } else {
+              this.isLastStepCompleted = true;
+            }
+          },
+        };
+      }
+    </script>
+  </body>
+</html>
