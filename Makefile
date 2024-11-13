@@ -4,6 +4,8 @@ TAILWIND = ${VENDOR}/tailwind.js
 ZENROOM = ${VENDOR}/zenroom.js
 .DEFAULT_GOAL := help
 
+.PHONY: test
+
 ## 🙏Deps
 vendors: ${ALPINE} ${TAILWIND} ${ZENROOM} ## Install all the deps in a vendor folder
 	@echo "👙Big success all the vendors where downloaded"
@@ -28,6 +30,10 @@ dev: vendors ## Run the project and serve with livereload
 clean: ## clean files not necessarry for save
 	@rm -fr ${VENDOR}
 	@echo "🧹 Clean done"
+
+## 🧪 Test
+test: ## run tests on zencode crypt contracts
+	$(MAKE) -C test
 
 ## Help:
 help: ## Show this help.

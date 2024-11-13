@@ -1,0 +1,18 @@
+Scenario qp
+Given nothing
+When I create the mlkem512 key
+and I create the mlkem512 public key
+and I create the hash of 'mlkem512 public key'
+Then print 'mlkem512_public_key'
+and print 'hash' as 'base58'
+and print keyring
+
+# output:
+# {
+#   "keyring": {
+#     "mlkem512": [...]
+#   },
+#   "mlkem512_public_key": [...]
+# }
+#
+# download: mlkem512_public_key as ${hash[0-8]}.pqid

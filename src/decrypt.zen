@@ -1,0 +1,15 @@
+
+Scenario qp
+Scenario ecdh
+
+Given I have a 'base64 dictionary' named 'secret message'
+and I have the 'keyring'
+
+When I take 'header' from path 'secret message'
+and I take 'text' from path 'secret message'
+and I rename 'text' to 'ciphertext'
+
+When I create the mlkem512 secret from 'header'
+and I decrypt the text of 'secret message' with 'mlkem512 secret'
+
+Then print the 'text' as 'string'
