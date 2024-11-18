@@ -4,7 +4,7 @@ When I create the mlkem512 key
 and I create the mlkem512 public key
 and I create the hash of 'mlkem512 public key'
 Then print 'mlkem512_public_key'
-and print 'hash' as 'base58'
+and print the 'hash' as 'base58'
 and print keyring
 
 # output:

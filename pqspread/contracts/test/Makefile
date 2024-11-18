@@ -1,4 +1,4 @@
-SRC := $(shell pwd)/../src
+SRC := $(shell pwd)/..
 
 PAYLOAD := $(shell base64 -w0 Makefile)
 
