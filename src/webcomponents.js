@@ -65,7 +65,7 @@ export class BrutalistCard extends HTMLElement {
             isHttps
               ? `<button 
                 class="text-sm border border-black px-2 py-1 hover:bg-black hover:text-white"
-                @click="copyToClipboard"
+                onClick="navigator.clipboard.writeText('${content.replace(/'/g, "\\'")}').then(() => alert('Copied to clipboard!')).catch(() => alert('Failed to copy!'))"
             >
                 Copy
             </button>`
