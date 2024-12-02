@@ -19,3 +19,6 @@ encrypt: cleartext.json
 
 decrypt:
 	zenroom -z ${SRC}/decrypt.zen -k recipient_keyring.json -a ciphertext.json > /dev/null
+
+clean:
+	rm -f *.json

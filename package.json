@@ -14,7 +14,6 @@
     "vite-plugin-singlefile": "^2.0.3"
   },
   "dependencies": {
-    "@alpinejs/persist": "^3.14.3",
     "@fontsource-variable/jetbrains-mono": "^5.1.1",
     "@unocss/reset": "^0.64.1",
     "alpinejs": "^3.14.3",

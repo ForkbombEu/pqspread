@@ -3,9 +3,8 @@ Given nothing
 When I create the mlkem512 key
 and I create the mlkem512 public key
 and I create the hash of 'mlkem512 public key'
-Then print 'mlkem512_public_key'
-and print the 'hash' as 'mnemonic'
-and print keyring
+and I copy 'mlkem512 public key' to 'memo'
+Then print data as 'mnemonic'
 
 # output:
 # {

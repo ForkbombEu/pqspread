@@ -18,9 +18,10 @@ ol > li::before {
 }
 .timeline ol > li:before {
   counter-increment: list;
-  content: "Step " counter(list) ".";
+  content: counter(list) ".";
 }
-.timeline ol > li.completed {
+.timeline ol > li.completed,
+.timeline ol > li.completed > textarea {
   background-color: #edf7ed; /* Light green for completed */
 }
 .timeline ol > li.current {

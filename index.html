@@ -4,104 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quantum-Safe Encryption/Decryption</title>
-    <script
-      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
-      defer
-    ></script>
-    <script src="https://cdn.jsdelivr.net/npm/@unocss/runtime"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@unocss/reset/tailwind.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/@slangroom/browser@1.43.2/build/slangroom.min.js"></script>
-    <style>
-      body {
-        font-family: "JetBrains Mono", monospace;
-      }
-      ol > li::before {
-        content: attr(data-step);
-        margin-right: 8px;
-        font-weight: bold;
-        color: #1c39bb;
-      }
-      .timeline ol {
-        counter-reset: list;
-      }
-      .timeline ol > li {
-        display: flex;
-        border: 1px solid #1c39bb;
-        padding: 10px;
-        margin-bottom: -1px;
-      }
-      .timeline ol > li:before {
-        counter-increment: list;
-        content: "Step " counter(list) ".";
-      }
-      .timeline ol > li.completed {
-        background-color: #d4f3e1; /* Light green for completed */
-      }
-      .timeline ol > li.current {
-        background-color: #f5f5f5; /* Grey for current */
-      }
-      .timeline ol > li.future {
-        background-color: #fdfdfd; /* White for future */
-      }
-      .spinner {
-        border: 2px solid #f3f3f3;
-        border-top: 2px solid #1c39bb;
-        border-radius: 50%;
-        width: 12px;
-        height: 12px;
-        animation: spin 0.6s linear infinite;
-      }
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-      .anim-text {
-        animation: text 3.5s ease infinite;
-      }
-
-      @keyframes text {
-        0%,
-        100% {
-          background-size: 200% 200%;
-          background-position: left center;
-        }
-        50% {
-          background-size: 200% 200%;
-          background-position: right center;
-        }
-      }
-
-      ,
-      .string {
-        color: violet;
-      }
-      .number {
-        color: darkorange;
-      }
-      .boolean {
-        color: blue;
-      }
-      .null {
-        color: magenta;
-      }
-      .key {
-        color: red;
-      }
-    </style>
   </head>
+
   <body class="p-10">
-    <div class="flex flex-col gap-4 max-w-4xl mx-auto">
+    <div class="flex flex-col gap-4 max-w-7xl mx-auto">
       <div class="flex items-baseline gap-2">
         <h1
           class="monospace text-3xl anim-text animate-text bg-gradient-to-r from-[#ca9ee6] via-[#e5c890] ] to-[#8caaee] bg-clip-text text-transparent font-black"
@@ -118,6 +24,7 @@
           </a>
         </span>
       </div>
+
       <p class="text-sm">
         This html page enables quantum-safe file encryption and decryption using
         the
@@ -168,8 +75,20 @@
       </span>
     </div>
 
-    <div x-data="PQSpread()" class="max-w-4xl mx-auto">
-      <!-- Selection of mode -->
+    <pre class="hidden">
+      <zencode-exec id="keyring" storage="local">
+        Scenario qp
+        Given nothing
+        When I create the mlkem512 key
+        And I create the mlkem512 public key
+        And I create the hash of 'mlkem512 public key'
+        Then print 'mlkem512_public_key'
+        And print the 'hash' as 'base58'
+        And print keyring
+      </zencode-exec>
+    </pre>
+
+    <div class="max-w-7xl mx-auto">
       <div class="mb-4">
         <hr class="m-6" />
         <p class="mb-6">
@@ -178,267 +97,178 @@
           files sent to you—fast, secure, and
           <span class="border-b-3 border-[#1C39BB]"> quantum-safe! </span>
         </p>
-        <button
-          @click="setMode('encrypt')"
-          :class="mode === 'encrypt' ? 'bg-[#1C39BB] text-white' : ''"
-          class="border px-4 py-2 focus:outline-none border-[#1C39BB]"
+        <div
+          x-data="{ 
+            tab: window.location.hash ? window.location.hash.substring(1) : 'encrypt',
+            convert(event, field) {
+              const file = event.target.files[0];
+              if (!file) return;
+              
+              const reader = new FileReader();
+              reader.onload = (e) => {
+                this[field] = e.target.result.split(',')[1];
+              };
+              reader.readAsDataURL(file);
+            },
+          }"
         >
-          Encrypt
-        </button>
-        <button
-          @click="setMode('decrypt')"
-          :class="mode === 'decrypt' ? 'bg-[#1C39BB] text-white' : ''"
-          class="border px-4 py-2 focus:outline-none border-[#1C39BB]"
-        >
-          Decrypt
-        </button>
-      </div>
+          <nav>
+            <button
+              href="#"
+              class="border px-4 py-2 focus:outline-none border-[#1C39BB]"
+              :class="tab === 'encrypt' ? 'bg-[#1C39BB] text-white' : ''"
+              @click.prevent="tab = 'encrypt'; window.location.hash = 'encrypt'; SC()"
+            >
+              Encrypt
+            </button>
+            <button
+              href="#"
+              class="border px-4 py-2 focus:outline-none border-[#1C39BB]"
+              :class="tab === 'decrypt' ? 'bg-[#1C39BB] text-white' : ''"
+              @click.prevent="tab = 'decrypt'; window.location.hash = 'decrypt'; SC()"
+            >
+              Decrypt
+            </button>
+          </nav>
 
-      <!-- Timeline -->
-      <template x-if="mode">
-        <div class="timeline">
-          <h2
-            class="text-xl font-bold mb-4"
-            x-text="mode === 'encrypt' ? 'Encryption Process' : 'Decryption Process'"
-          ></h2>
-          <ol class="list-none">
-            <template x-for="(step, index) in steps" :key="index">
-              <li
-                :class="{'current': index === currentStep, 'completed': index < currentStep, 'future': index > currentStep}"
-                :data-step="(index + 1) + '.'"
+          <div class="grid grid-cols-1 mt-4 md:grid-cols-8 md:gap-4">
+            <div
+              x-data="{mlkem512_public_key: '', cleartext: '', encrypted: false, downloaded: false}"
+              x-show="tab === 'encrypt'"
+              class="timeline col-span-3"
+            >
+              <ol class="list-none">
+                <li
+                  class="border-b border-black pb-2 whitespace-nowrap"
+                  :class="{'completed': mlkem512_public_key !== ''}"
+                >
+                  <textarea
+                    rows="10"
+                    class="pt-1 w-full text-xs"
+                    placeholder="Paste recipient's public key"
+                    @paste.prevent="mlkem512_public_key = (event.clipboardData || window.clipboardData).getData('text').trim()"
+                    x-model="mlkem512_public_key"
+                  ></textarea>
+                </li>
+                <li
+                  x-show="mlkem512_public_key"
+                  class="border-b border-black pb-2 whitespace-nowrap"
+                  :class="{'completed': cleartext !== ''}"
+                >
+                  <input type="file" @change="convert($event, 'cleartext')" />
+                  <template x-if="cleartext">
+                    <pre x-show="false">
+                      <zencode-exec id="secret" :d="JSON.stringify({cleartext})" :k="JSON.stringify({mlkem512_public_key})" storage="session">
+                        Scenario qp
+                        Scenario ecdh
+
+                        Given I have a 'base64' named 'cleartext'
+                        and I have a 'mlkem512 public key'
+
+                        When I create the mlkem512 kem for 'mlkem512 public key'
+                         And I take 'mlkem512 secret' from path 'mlkem512 kem'
+                         And I take 'mlkem512 ciphertext' from path 'mlkem512 kem'
+                         And I rename 'mlkem512 ciphertext' to 'header'
+                        When I encrypt the secret message 'cleartext' with 'mlkem512 secret'
+                        Then print the 'secret message'
+                      </zencode-exec>
+                    </pre>
+                  </template>
+                </li>
+                <li
+                  class="border-b border-black pb-2 whitespace-nowrap"
+                  :class="{'completed': downloaded}"
+                  x-show="encrypted"
+                  x-data="{ encrypted: sessionStorage.getItem('secret') !== null }"
+                  x-init="window.addEventListener('storage', () => encrypted = sessionStorage.getItem('secret') !== null);
+                          setInterval(() => encrypted = sessionStorage.getItem('secret') !== null, 500);"
+                >
+                  <template x-if="encrypted">
+                    <a
+                      :href="Download(SG('secret'))"
+                      :download="JSON.parse(SG('secret')).secret_message.checksum + '.pqs'"
+                      class="border px-4 py-2 focus:outline-none border-[#1C39BB]"
+                      @click="downloaded = true; SC();"
+                    >
+                      Download File
+                    </a>
+                  </template>
+                </li>
+                <li x-show="downloaded">
+                  <span>🎉 Download of the encrypted file (.pqs) started</span>
+                </li>
+              </ol>
+            </div>
+            <div
+              x-data="{secret_message: '', downloaded: false, decrypted: ''}"
+              x-show="tab === 'decrypt'"
+              class="timeline col-span-3"
+            >
+              <ol class="list-none">
+                <li class="border-b border-black pb-2 whitespace-nowrap">
+                  <input
+                    type="file"
+                    @change="convert($event, 'secret_message')"
+                  />
+                </li>
+                <template x-if="secret_message !== ''">
+                  <pre x-show="false">
+                    <zencode-exec id="original_file" :d="atob(secret_message)" :k="LG('keyring')" storage="session">
+                      Scenario qp
+                      Scenario ecdh
+
+                      Given I have a 'base64 dictionary' named 'secret message'
+                      and I have the 'keyring'
+
+                      When I take 'header' from path 'secret message'
+                      and I take 'text' from path 'secret message'
+                      and I rename 'text' to 'ciphertext'
+
+                      When I create the mlkem512 secret from 'header'
+                      and I decrypt the text of 'secret message' with 'mlkem512 secret'
+
+                      Then print the 'text' as 'string'
+                    </zencode-exec>
+                  </pre>
+                </template>
+                <li
+                  class="border-b border-black pb-2 whitespace-nowrap"
+                  :class="{'completed': downloaded}"
+                  x-show="decrypted"
+                  x-data="{ decrypted: sessionStorage.getItem('original_file') !== null }"
+                  x-init="window.addEventListener('storage', () => decrypted = sessionStorage.getItem('original_file') !== null);
+                          setInterval(() => decrypted = sessionStorage.getItem('original_file') !== null, 500);"
+                >
+                  <template x-if="decrypted">
+                    <a
+                      :href="Download(JSON.parse(SG('original_file')).text)"
+                      download="decrypted.file"
+                      class="border px-4 py-2 focus:outline-none border-[#1C39BB]"
+                      @click="downloaded = true; SC();"
+                    >
+                      Download File
+                    </a>
+                  </template>
+                </li>
+                <li x-show="downloaded">
+                  <span>🎉 Download of the decrypted file started</span>
+                </li>
+              </ol>
+            </div>
+            <div class="flex flex-col gap-4 col-span-5">
+              <brutalist-card
+                x-show="LG('keyring')"
+                title="Your public key"
+                description="share it with others to receive encrypted files"
+                :content="JSON.parse(LG('keyring')).mlkem512_public_key"
               >
-                <div>
-                  <!-- Clickable title link for active steps only -->
-                  <a
-                    href="#"
-                    @click.prevent="index === currentStep && handleStepAction(step, index)"
-                    x-text="step.title"
-                  >
-                  </a>
-
-                  <!-- File upload trigger -->
-                  <template x-if="index === currentStep && step.uploadFile">
-                    <div class="mt-2">
-                      <label for="fileUpload" class="cursor-pointer"
-                        >Upload a file</label
-                      >
-                      <input
-                        type="file"
-                        id="fileUpload"
-                        @change="handleFileUpload($event)"
-                        class="hidden"
-                      />
-                    </div>
-                  </template>
-
-                  <!-- Public Key input -->
-                  <template
-                    x-if="index === currentStep && step.importPublicKey"
-                  >
-                    <div class="mt-2">
-                      <label for="publicKey" class="block mb-1 font-bold"
-                        >Enter Sender's Public Key:</label
-                      >
-                      <textarea
-                        id="publicKey"
-                        x-model="publicKey"
-                        class="w-full border p-2 text-sm"
-                      ></textarea>
-                      <button
-                        class="mt-2 px-4 py-2 bg-[#1C39BB] text-white border rounded hover:bg-gray-800"
-                        @click="handleStepAction(step, index)"
-                      >
-                        Proceed
-                      </button>
-                    </div>
-                  </template>
-
-                  <!-- Display spinner or output for each step independently -->
-                  <div class="text-sm mt-2 overflow-hidden">
-                    <template x-if="loadingSteps[index]">
-                      <div class="spinner"></div>
-                    </template>
-                    <template x-if="!loadingSteps[index] && step.output">
-                      <pre
-                        class="font-mono overflow-x-auto max-w-3xl"
-                        x-html="step.output"
-                      ></pre>
-                    </template>
-                  </div>
-                </div>
-              </li>
-            </template>
-          </ol>
+              </brutalist-card>
+            </div>
+          </div>
         </div>
-      </template>
+      </div>
     </div>
 
-    <script>
-      function PQSpread() {
-        <!--console.log(">>>>>>>>>>>>>>>", mimmo);-->
-        return {
-          mode: null, // 'encrypt' or 'decrypt'
-          steps: [],
-          currentStep: 0,
-          loadingSteps: [],
-          publicKey: "",
-
-          // Set mode and define steps
-          setMode(selectedMode) {
-            this.mode = selectedMode;
-            this.steps =
-              selectedMode === "encrypt"
-                ? [
-                    {
-                      title: "Generate Key",
-                      action: this.generateKey,
-                      output: "",
-                    },
-                    {
-                      title: "Upload Document",
-                      action: null,
-                      output: "Please upload a file.",
-                      uploadFile: true,
-                    },
-                    {
-                      title: "Encrypt Document",
-                      action: this.encryptFile,
-                      output: "",
-                      uploadFile: false,
-                    },
-                  ]
-                : [
-                    {
-                      title: "Generate Key",
-                      action: this.generateKey,
-                      output: "",
-                      uploadFile: false,
-                    },
-                    {
-                      title: "Import Sender’s Public Key",
-                      action: this.importPublicKey,
-                      output: "",
-                      uploadFile: false,
-                      importPublicKey: true,
-                    },
-                    {
-                      title: "Upload Document",
-                      action: null,
-                      output: "Please upload a file.",
-                      uploadFile: true,
-                    },
-                    {
-                      title: "Decrypt Document",
-                      action: this.decryptFile,
-                      output: "",
-                      uploadFile: false,
-                    },
-                  ];
-            this.currentStep = 0;
-            this.loadingSteps = Array(this.steps.length).fill(false);
-          },
-
-          // Sample actions for steps
-          async generateKey() {
-            const r = await slangroom.execute(
-              `Scenario qp
-Given nothing
-When I create the mlkem512 key
-and I create the mlkem512 public key
-and I create the hash of 'mlkem512 public key'
-Then print 'mlkem512_public_key'
-and print 'hash' as 'base58'
-and print keyring
-`,
-            );
-            return highlight(JSON.stringify(r.result, null, 4));
-          },
-          async encryptFile() {
-            return new Promise((resolve) =>
-              setTimeout(() => resolve("File encrypted with ML-KEM512!"), 1500),
-            );
-          },
-          async importPublicKey() {
-            if (!this.publicKey.trim()) {
-              return "Please enter a valid public key.";
-            }
-            return `Public Key imported:\n${this.publicKey.trim().substring(0, 50)}...`;
-          },
-          async decryptFile() {
-            return new Promise((resolve) =>
-              setTimeout(() => resolve("File decrypted successfully!"), 1500),
-            );
-          },
-
-          // Handle step actions
-          async handleStepAction(step, index) {
-            if (step.uploadFile) {
-              document.getElementById("fileUpload").click();
-            } else if (step.action) {
-              this.loadingSteps[index] = true;
-              const result = await step.action();
-              this.steps[index].output = result;
-              this.loadingSteps[index] = false;
-              this.advanceStep();
-            }
-          },
-
-          // Handle file upload and convert to Base64
-          async handleFileUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-              this.loadingSteps[this.currentStep] = true;
-              const base64String = await this.fileToBase64(file);
-              this.steps[this.currentStep].output =
-                `File: ${file.name} (${(file.size / 1024).toFixed(2)} KB)\nBase64: ${base64String.substring(0, 50)}...`;
-              this.loadingSteps[this.currentStep] = false;
-              this.advanceStep();
-            }
-          },
-
-          // Utility function to convert file to Base64
-          fileToBase64(file) {
-            return new Promise((resolve, reject) => {
-              const reader = new FileReader();
-              reader.onload = () => resolve(reader.result);
-              reader.onerror = (error) => reject(error);
-              reader.readAsDataURL(file);
-            });
-          },
-
-          // Advance to the next step
-          advanceStep() {
-            if (this.currentStep < this.steps.length - 1) {
-              this.currentStep++;
-            }
-          },
-        };
-      }
-
-      const highlight = (json) => {
-        json = json
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;");
-        return json.replace(
-          /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
-          function (match) {
-            var cls = "number";
-            if (/^"/.test(match)) {
-              if (/:$/.test(match)) {
-                cls = "key";
-              } else {
-                cls = "string";
-              }
-            } else if (/true|false/.test(match)) {
-              cls = "boolean";
-            } else if (/null/.test(match)) {
-              cls = "null";
-            }
-            return '<span class="' + cls + '">' + match + "</span>";
-          },
-        );
-      };
-    </script>
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>
