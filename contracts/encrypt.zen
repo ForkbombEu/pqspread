@@ -12,9 +12,9 @@ Given I have a 'base64' named 'cleartext'
 and I have a 'mlkem512 public key'
 
 When I create the mlkem512 kem for 'mlkem512 public key'
-and I take 'mlkem512 secret' from path 'mlkem512 kem'
-and I take 'mlkem512 ciphertext' from path 'mlkem512 kem'
-and I rename 'mlkem512 ciphertext' to 'header'
+ And I take 'mlkem512 secret' from path 'mlkem512 kem'
+ And I take 'mlkem512 ciphertext' from path 'mlkem512 kem'
+ And I rename 'mlkem512 ciphertext' to 'header'
 When I encrypt the secret message 'cleartext' with 'mlkem512 secret'
 
 Then print the 'secret message'

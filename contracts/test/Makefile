@@ -1,4 +1,4 @@
-SRC := $(shell pwd)/../src
+SRC := $(shell pwd)/..
 
 PAYLOAD := $(shell base64 -w0 Makefile)
 
@@ -19,3 +19,6 @@ encrypt: cleartext.json
 
 decrypt:
 	zenroom -z ${SRC}/decrypt.zen -k recipient_keyring.json -a ciphertext.json > /dev/null
+
+clean:
+	rm -f *.json

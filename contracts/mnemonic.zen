@@ -1,0 +1,4 @@
+Scenario qp
+Given I have a 'string' named 'minihash'
+When I create the hash of 'minihash'
+Then print the 'hash' as 'mnemonic'

@@ -3,116 +3,272 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Minimalistic Timeline - Alpine.js & Tailwind</title>
-    <script src="./vendor/alpine.js" defer></script>
-    <script src="./vendor/tailwind.js" defer></script>
-    <link href="./css/main.css" rel="stylesheet" />
+    <title>Quantum-Safe Encryption/Decryption</title>
   </head>
-  <body class="bg-gray-50 font-serif">
-    <div
-      x-data="timelineData()"
-      class="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md mt-10"
-    >
-      <h1 class="monospace text-3xl font-black">PQChat</h1>
-      innovation by
-      <a href="https://forkbomb.solutions" class="font-bold monospace underline"
-        >FORKBOMB</a
-      >
-      <ol class="space-y-4 list-decimal list-inside mt-12">
-        <template x-for="(step, index) in steps" :key="index">
-          <li
-            :class="{'text-gray-500': index > currentStep, 'text-black': index === currentStep, 'text-gray-400': index < currentStep}"
-          >
-            <span
-              :class="{'text-gray-500': index > currentStep, 'text-black': index === currentStep, 'text-gray-400 line-through': index < currentStep}"
-              x-text="step.title"
-            ></span>
-            <div class="space-y-1 pl-4">
-              <!-- Display spinner or output for each step independently -->
-              <div class="text-sm pl-2">
-                <template x-if="loadingSteps[index]">
-                  <div class="spinner"></div>
-                </template>
-                <template x-if="!loadingSteps[index] && step.output">
-                  <div
-                    class="text-gray-600 monospace"
-                    x-text="step.output"
-                  ></div>
-                </template>
-              </div>
 
-              <!-- Next step link for the current step only, hidden after last step is completed -->
-              <template x-if="currentStep === index && !isLastStepCompleted">
-                <button
-                  @click="nextStep"
-                  class="text-blue-600 hover:underline text-sm mt-2 inline-flex"
-                >
-                  Next Step
-                </button>
-              </template>
-            </div>
-          </li>
-        </template>
-      </ol>
+  <body class="p-10">
+    <div class="flex flex-col gap-4 max-w-7xl mx-auto">
+      <div class="flex items-baseline gap-2">
+        <h1
+          class="monospace text-3xl anim-text animate-text bg-gradient-to-r from-[#ca9ee6] via-[#e5c890] ] to-[#8caaee] bg-clip-text text-transparent font-black"
+        >
+          <a href="/"> PQSpread</a>
+        </h1>
+        <span class="text-xs">
+          kindly by
+          <a
+            href="https://forkbomb.solutions"
+            class="font-bold monospace underline text-[#1C39BB] whitespace-nowrap"
+          >
+            THE FORKBOMB COMPANY
+          </a>
+        </span>
+      </div>
+
+      <p class="text-sm">
+        This html page enables quantum-safe file encryption and decryption using
+        the
+        <a
+          href="https://csrc.nist.gov/pubs/fips/203/final"
+          class="underline"
+          target="_blank"
+          >MLB-KEM standard</a
+        >, ensuring security against quantum threats. All cryptographic
+        operations are powered by our custom implementation built entirely
+        in-house using the cutting-edge
+        <a
+          href="https://zenroom.org/"
+          class="underline text-[#8839ef]"
+          target="_blank"
+          >Zenroom virtual machine</a
+        >.
+      </p>
+      <p class="text-sm">
+        As one of the first to implement this advanced technology, we provide a
+        secure, client-side solution with no remote data storage required. Use
+        it online
+        <a
+          href="https://forkbombeu.github.io/pqspread"
+          class="underline text-[#8839ef]"
+        >
+          https://forkbomb.eu/pqspread</a
+        >
+
+        or for <strong>offline and paranoid mode</strong> download a single html
+        file to run on your machine from
+        <a
+          href="https://github.com/forkbombeu/pqspread"
+          class="underline text-[#8839ef]"
+        >
+          github.com/forkbombeu/pqspread
+        </a>
+      </p>
+      <span class="text-xs text-end">
+        made with ❤️‍🔥 by
+        <a
+          href="https://forkbomb.solutions"
+          class="font-bold monospace underline text-[#1C39BB]"
+        >
+          FORKBOMB</a
+        >
+        hackers
+      </span>
     </div>
 
-    <script>
-      function timelineData() {
-        return {
-          steps: [
-            {
-              title: "Generate a Quantum Proof Keypair",
-              action: () =>
-                new Promise((resolve) =>
-                  setTimeout(() => resolve("Initialized!"), 1000),
-                ),
-              output: "",
-            },
-            {
-              title: "Publish your public key to did:dyne",
-              action: () =>
-                new Promise((resolve) =>
-                  setTimeout(() => resolve("Processing... Done!"), 2000),
-                ),
-              output: "",
-            },
-            {
-              title: "Send to you friend the secret emoji",
-              action: () =>
-                new Promise((resolve) =>
-                  setTimeout(() => resolve("Getting Close..."), 1500),
-                ),
-              output: "",
-            },
-            {
-              title: "Encrypt/Decrypt a message to her",
-              action: () =>
-                new Promise((resolve) =>
-                  setTimeout(() => resolve("Completed Successfully!"), 1200),
-                ),
-              output: "",
-            },
-          ],
-          currentStep: 0,
-          loadingSteps: [false, false, false, false], // Track loading state for each step
-          isLastStepCompleted: false,
+    <pre class="hidden">
+      <zencode-exec id="keyring" storage="local">
+        Scenario qp
+        Given nothing
+        When I create the mlkem512 key
+        And I create the mlkem512 public key
+        And I create the hash of 'mlkem512 public key'
+        Then print 'mlkem512_public_key'
+        And print the 'hash' as 'base58'
+        And print keyring
+      </zencode-exec>
+    </pre>
 
-          // Move to the next step, execute action, handle loading/output state
-          async nextStep() {
-            this.loadingSteps[this.currentStep] = true;
-            const result = await this.steps[this.currentStep].action();
-            this.steps[this.currentStep].output = result;
-            this.loadingSteps[this.currentStep] = false;
+    <div class="max-w-7xl mx-auto">
+      <div class="mb-4">
+        <hr class="m-6" />
+        <p class="mb-6">
+          <strong>Act now!</strong>
+          Click Encrypt to secure and share your files, or Decrypt to restore
+          files sent to you—fast, secure, and
+          <span class="border-b-3 border-[#1C39BB]"> quantum-safe! </span>
+        </p>
+        <div
+          x-data="{ 
+            tab: window.location.hash ? window.location.hash.substring(1) : 'encrypt',
+            convert(event, field) {
+              const file = event.target.files[0];
+              if (!file) return;
+              
+              const reader = new FileReader();
+              reader.onload = (e) => {
+                this[field] = e.target.result.split(',')[1];
+              };
+              reader.readAsDataURL(file);
+            },
+          }"
+        >
+          <nav>
+            <button
+              href="#"
+              class="border px-4 py-2 focus:outline-none border-[#1C39BB]"
+              :class="tab === 'encrypt' ? 'bg-[#1C39BB] text-white' : ''"
+              @click.prevent="tab = 'encrypt'; window.location.hash = 'encrypt'; SC()"
+            >
+              Encrypt
+            </button>
+            <button
+              href="#"
+              class="border px-4 py-2 focus:outline-none border-[#1C39BB]"
+              :class="tab === 'decrypt' ? 'bg-[#1C39BB] text-white' : ''"
+              @click.prevent="tab = 'decrypt'; window.location.hash = 'decrypt'; SC()"
+            >
+              Decrypt
+            </button>
+          </nav>
 
-            // Move to the next step if available, otherwise mark as last step completed
-            if (this.currentStep < this.steps.length - 1) {
-              this.currentStep++;
-            } else {
-              this.isLastStepCompleted = true;
-            }
-          },
-        };
-      }
-    </script>
+          <div class="grid grid-cols-1 mt-4 md:grid-cols-8 md:gap-4">
+            <div
+              x-data="{mlkem512_public_key: '', cleartext: '', encrypted: false, downloaded: false}"
+              x-show="tab === 'encrypt'"
+              class="timeline col-span-3"
+            >
+              <ol class="list-none">
+                <li
+                  class="border-b border-black pb-2 whitespace-nowrap"
+                  :class="{'completed': mlkem512_public_key !== ''}"
+                >
+                  <textarea
+                    rows="10"
+                    class="pt-1 w-full text-xs"
+                    placeholder="Paste recipient's public key"
+                    @paste.prevent="mlkem512_public_key = (event.clipboardData || window.clipboardData).getData('text').trim()"
+                    x-model="mlkem512_public_key"
+                  ></textarea>
+                </li>
+                <li
+                  x-show="mlkem512_public_key"
+                  class="border-b border-black pb-2 whitespace-nowrap"
+                  :class="{'completed': cleartext !== ''}"
+                >
+                  <input type="file" @change="convert($event, 'cleartext')" />
+                  <template x-if="cleartext">
+                    <pre x-show="false">
+                      <zencode-exec id="secret" :d="JSON.stringify({cleartext})" :k="JSON.stringify({mlkem512_public_key})" storage="session">
+                        Scenario qp
+                        Scenario ecdh
+
+                        Given I have a 'base64' named 'cleartext'
+                        and I have a 'mlkem512 public key'
+
+                        When I create the mlkem512 kem for 'mlkem512 public key'
+                         And I take 'mlkem512 secret' from path 'mlkem512 kem'
+                         And I take 'mlkem512 ciphertext' from path 'mlkem512 kem'
+                         And I rename 'mlkem512 ciphertext' to 'header'
+                        When I encrypt the secret message 'cleartext' with 'mlkem512 secret'
+                        Then print the 'secret message'
+                      </zencode-exec>
+                    </pre>
+                  </template>
+                </li>
+                <li
+                  class="border-b border-black pb-2 whitespace-nowrap"
+                  :class="{'completed': downloaded}"
+                  x-show="encrypted"
+                  x-data="{ encrypted: sessionStorage.getItem('secret') !== null }"
+                  x-init="window.addEventListener('storage', () => encrypted = sessionStorage.getItem('secret') !== null);
+                          setInterval(() => encrypted = sessionStorage.getItem('secret') !== null, 500);"
+                >
+                  <template x-if="encrypted">
+                    <a
+                      :href="Download(SG('secret'))"
+                      :download="JSON.parse(SG('secret')).secret_message.checksum + '.pqs'"
+                      class="border px-4 py-2 focus:outline-none border-[#1C39BB]"
+                      @click="downloaded = true; SC();"
+                    >
+                      Download File
+                    </a>
+                  </template>
+                </li>
+                <li x-show="downloaded">
+                  <span>🎉 Download of the encrypted file (.pqs) started</span>
+                </li>
+              </ol>
+            </div>
+            <div
+              x-data="{secret_message: '', downloaded: false, decrypted: ''}"
+              x-show="tab === 'decrypt'"
+              class="timeline col-span-3"
+            >
+              <ol class="list-none">
+                <li class="border-b border-black pb-2 whitespace-nowrap">
+                  <input
+                    type="file"
+                    @change="convert($event, 'secret_message')"
+                  />
+                </li>
+                <template x-if="secret_message !== ''">
+                  <pre x-show="false">
+                    <zencode-exec id="original_file" :d="atob(secret_message)" :k="LG('keyring')" storage="session">
+                      Scenario qp
+                      Scenario ecdh
+
+                      Given I have a 'base64 dictionary' named 'secret message'
+                      and I have the 'keyring'
+
+                      When I take 'header' from path 'secret message'
+                      and I take 'text' from path 'secret message'
+                      and I rename 'text' to 'ciphertext'
+
+                      When I create the mlkem512 secret from 'header'
+                      and I decrypt the text of 'secret message' with 'mlkem512 secret'
+
+                      Then print the 'text' as 'string'
+                    </zencode-exec>
+                  </pre>
+                </template>
+                <li
+                  class="border-b border-black pb-2 whitespace-nowrap"
+                  :class="{'completed': downloaded}"
+                  x-show="decrypted"
+                  x-data="{ decrypted: sessionStorage.getItem('original_file') !== null }"
+                  x-init="window.addEventListener('storage', () => decrypted = sessionStorage.getItem('original_file') !== null);
+                          setInterval(() => decrypted = sessionStorage.getItem('original_file') !== null, 500);"
+                >
+                  <template x-if="decrypted">
+                    <a
+                      :href="Download(JSON.parse(SG('original_file')).text)"
+                      download="decrypted.file"
+                      class="border px-4 py-2 focus:outline-none border-[#1C39BB]"
+                      @click="downloaded = true; SC();"
+                    >
+                      Download File
+                    </a>
+                  </template>
+                </li>
+                <li x-show="downloaded">
+                  <span>🎉 Download of the decrypted file started</span>
+                </li>
+              </ol>
+            </div>
+            <div class="flex flex-col gap-4 col-span-5">
+              <brutalist-card
+                x-show="LG('keyring')"
+                title="Your public key"
+                description="share it with others to receive encrypted files"
+                :content="JSON.parse(LG('keyring')).mlkem512_public_key"
+              >
+              </brutalist-card>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>

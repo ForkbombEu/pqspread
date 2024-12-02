@@ -1,0 +1,43 @@
+name: Deploy and Release
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+permissions:
+  pages: write
+  id-token: write
+  contents: write
+
+jobs:
+  deploy:
+    environment:
+      name: Demo
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+      - run: bun install
+      - run: bun run build
+      - run: cp dist/index.html pqspread.html
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - uses: actions/deploy-pages@v4
+        id: deployment
+      - uses: actions/setup-node@v3
+        with:
+          node-version: latest
+      - run: npm install -g semantic-release
+      - run: npm add @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/git @semantic-release/github
+      - run: semantic-release 
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,17 @@
+Scenario qp
+Given nothing
+When I create the mlkem512 key
+and I create the mlkem512 public key
+and I create the hash of 'mlkem512 public key'
+and I copy 'mlkem512 public key' to 'memo'
+Then print data as 'mnemonic'
+
+# output:
+# {
+#   "keyring": {
+#     "mlkem512": [...]
+#   },
+#   "mlkem512_public_key": [...]
+# }
+#
+# download: mlkem512_public_key as ${hash[0-8]}.pqid

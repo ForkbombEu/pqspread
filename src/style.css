@@ -1,0 +1,79 @@
+body {
+  font-family: "JetBrains Mono Variable", monospace;
+}
+ol > li::before {
+  content: attr(data-step);
+  margin-right: 8px;
+  font-weight: bold;
+  color: #1c39bb;
+}
+.timeline ol {
+  counter-reset: list;
+}
+.timeline ol > li {
+  display: flex;
+  border: 1px solid #1c39bb;
+  padding: 10px;
+  margin-bottom: -1px;
+}
+.timeline ol > li:before {
+  counter-increment: list;
+  content: counter(list) ".";
+}
+.timeline ol > li.completed,
+.timeline ol > li.completed > textarea {
+  background-color: #edf7ed; /* Light green for completed */
+}
+.timeline ol > li.current {
+  background-color: #f5e0dc; /* Grey for current */
+}
+.timeline ol > li.future {
+  background-color: #fdfdfd; /* White for future */
+}
+.spinner {
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #1c39bb;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  animation: spin 0.6s linear infinite;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.anim-text {
+  animation: text 3.5s ease infinite;
+}
+
+@keyframes text {
+  0%,
+  100% {
+    background-size: 200% 200%;
+    background-position: left center;
+  }
+  50% {
+    background-size: 200% 200%;
+    background-position: right center;
+  }
+}
+
+.string {
+  color: #4c4f69;
+}
+.number {
+  color: darkorange;
+}
+.boolean {
+  color: blue;
+}
+.null {
+  color: magenta;
+}
+.key {
+  color: #e78284;
+}
