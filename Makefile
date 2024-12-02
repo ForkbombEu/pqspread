@@ -1,42 +1,41 @@
-VENDOR = vendor
-ALPINE = ${VENDOR}/alpine.js
-TAILWIND = ${VENDOR}/tailwind.js
-ZENROOM = ${VENDOR}/zenroom.js
-.DEFAULT_GOAL := help
+NODE_MODULES = node_modules
+PACKAGE_JSON = package.json
+BUN_LOCK = bun.lockb
+DIST = dist
+TEST = contracts/test
 
-.PHONY: test
+DEPS = bun rm awk
+K := $(foreach exec,$(DEPS),\
+        $(if $(shell which $(exec)),some string,$(error "🥶 `$(exec)` not found in PATH please install it")))
 
-## 🙏Deps
-vendors: ${ALPINE} ${TAILWIND} ${ZENROOM} ## Install all the deps in a vendor folder
-	@echo "👙Big success all the vendors where downloaded"
+all: help
 
-${VENDOR}: 
-	@mkdir ${VENDOR}
+$(NODE_MODULES): $(PACKAGE_JSON) $(BUN_LOCK)
+	bun i
 
-${ALPINE}: ${VENDOR}
-	@wget https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js -qO ${ALPINE}
+## Development
+build: $(NODE_MODULES) ## 🔨 Build to a single .html file
+	bun run build
 
-${TAILWIND}: ${VENDOR}
-	@wget https://cdn.tailwindcss.com -qO ${TAILWIND}
+dev: $(NODE_MODULES) ## 🎮 Run the project and serve with livereload 
+	bun run dev
 
-${ZENROOM}: ${VENDOR}
-	@wget https://cdn.jsdelivr.net/npm/zenroom/dist/main/index.min.js -qO ${ZENROOM}
-
-## 🎮 Run
-dev: vendors ## Run the project and serve with livereload 
-	npx browser-sync start --server --files "*.html"
-
-## 🧹 Clean
-clean: ## clean files not necessarry for save
-	@rm -fr ${VENDOR}
+clean: ## 🧹 clean files not necessarry for save
+	@rm -fr ${NODE_MODULES}
+	@rm -fr ${DIST}
+	@$(MAKE)	-C $(TEST) clean --no-print-directory
 	@echo "🧹 Clean done"
 
-## 🧪 Test
-test: ## run tests on zencode crypt contracts
-	$(MAKE) -C test
+test: ## 🧪 run tests on zencode scripts
+	$(MAKE) -C $(TEST)
 
-## Help:
-help: ## Show this help.
+## Help
+GREEN  := $(shell tput -Txterm setaf 2)
+YELLOW := $(shell tput -Txterm setaf 3)
+WHITE  := $(shell tput -Txterm setaf 7)
+CYAN   := $(shell tput -Txterm setaf 6)
+RESET  := $(shell tput -Txterm sgr0)
+help: ## 🦺 Show this help.
 	@echo ''
 	@echo 'Usage:'
 	@echo '  ${YELLOW}make${RESET} ${GREEN}<target>${RESET}'
