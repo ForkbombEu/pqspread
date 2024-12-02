@@ -12,7 +12,10 @@ export const SS = (k, v) => S(window.sessionStorage, k, v);
 export const SG = (k) => G(window.sessionStorage, k);
 export const SC = () => window.sessionStorage.clear();
 export const LS = (k, v) => {
-  if (window.localStorage.getItem(k) === null) S(window.localStorage, k, v);
+  if (window.localStorage.getItem(k) === null) {
+    S(window.localStorage, k, v);
+    document.dispatchEvent(new Event(k + "-updated"));
+  }
 };
 export const LG = (k) => G(window.localStorage, k);
 export const stringify = (obj) => {
