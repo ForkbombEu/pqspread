@@ -25,12 +25,10 @@ export class Zencode extends HTMLElement {
     const params = {};
     if (data !== "null") params.data = data;
     if (keys !== "null") params.keys = keys;
-    console.log(params);
     zencode_exec(script, params)
       .then((r) => {
         if (storage === "local") LS(id, r.result);
         if (storage === "session") SS(id, r.result);
-        console.log("Stored", id, r.result);
       })
       .catch((e) => {
         console.error("Error of " + id, e.logs);
