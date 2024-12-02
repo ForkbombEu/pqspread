@@ -4,24 +4,19 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --open",
     "build": "vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
-    "unocss": "^0.64.1",
-    "vite": "^5.4.10",
+    "unocss": "^0.65.0",
+    "vite": "^6.0.2",
     "vite-plugin-singlefile": "^2.0.3"
   },
   "dependencies": {
     "@fontsource-variable/jetbrains-mono": "^5.1.1",
-    "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/commit-analyzer": "^13.0.0",
-    "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^11.0.1",
-    "@semantic-release/release-notes-generator": "^14.0.1",
-    "@unocss/reset": "^0.64.1",
-    "alpinejs": "^3.14.3",
-    "zenroom": "^4.46.0"
+    "@unocss/reset": "^0.65.0",
+    "alpinejs": "^3.14.6",
+    "zenroom": "^4.46.1"
   }
 }
