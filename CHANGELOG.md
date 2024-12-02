@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/forkbombeu/pqspread/compare/v1.0.1...v1.0.2) (2024-12-02)
+
+
+### Bug Fixes
+
+* remove leftovers console.log ([#9](https://github.com/forkbombeu/pqspread/issues/9)) ([6afbd21](https://github.com/forkbombeu/pqspread/commit/6afbd213f3d37d71d1ea719cc5909258d7ec721b)), closes [#7](https://github.com/forkbombeu/pqspread/issues/7)
+
 ## [1.0.1](https://github.com/forkbombeu/pqspread/compare/v1.0.0...v1.0.1) (2024-12-02)
 
 
