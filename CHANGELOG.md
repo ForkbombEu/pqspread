@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/forkbombeu/pqspread/compare/v1.0.3...v1.1.0) (2024-12-03)
+
+
+### Bug Fixes
+
+* use latest node in CI for semrel ([bf87cb3](https://github.com/forkbombeu/pqspread/commit/bf87cb3cbc2ae5235d4f1806ca658328f89747e3))
+
+
+### Features
+
+* add license headers and reuse check ([#13](https://github.com/forkbombeu/pqspread/issues/13)) ([d22bde2](https://github.com/forkbombeu/pqspread/commit/d22bde2203fd05983126ca7c572cac078f937090))
+
 <!--
 SPDX-FileCopyrightText: 2024 The Forkbomb Company
 
