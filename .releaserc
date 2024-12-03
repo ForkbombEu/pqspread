@@ -7,6 +7,12 @@
   "repositoryUrl": "git@github.com:forkbombeu/pqspread.git",
   "plugins": [
     "@semantic-release/commit-analyzer",
+    [
+      "@semantic-release/exec",
+      {
+        "verifyReleaseCmd": "echo ${nextRelease.version} > VERSION"
+      }
+    ],
     "@semantic-release/release-notes-generator",
     "@semantic-release/changelog",
     [
