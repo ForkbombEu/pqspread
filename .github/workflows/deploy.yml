@@ -41,6 +41,9 @@ jobs:
         id: deployment
       - run: bun add -g semantic-release
       - run: bun add -D @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/git @semantic-release/github
+      - uses: actions/setup-node@v3
+        with:
+          node-version: latest
       - run: semantic-release 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
