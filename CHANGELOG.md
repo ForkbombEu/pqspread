@@ -1,3 +1,17 @@
+# [1.3.0](https://github.com/forkbombeu/pqspread/compare/v1.2.0...v1.3.0) (2024-12-03)
+
+
+### Bug Fixes
+
+* allow to run semrel on the workflow ([3d3adec](https://github.com/forkbombeu/pqspread/commit/3d3adece4cd97194359c4be20329a660614c1e1d))
+* reuse linting and add ignored files as cc0 ([3655cef](https://github.com/forkbombeu/pqspread/commit/3655cef51b4fbce6ecfbd28cd185892b7599186e))
+
+
+### Features
+
+* add the semver to the UI ([#14](https://github.com/forkbombeu/pqspread/issues/14)) ([eee2ecb](https://github.com/forkbombeu/pqspread/commit/eee2ecbbddead25a8b81671e6b5783ab51228782)), closes [#10](https://github.com/forkbombeu/pqspread/issues/10)
+* calculate the version prior build with exec ([4c87dd4](https://github.com/forkbombeu/pqspread/commit/4c87dd49c445327ffa8b7d04155489058fe8f596))
+
 # [1.2.0](https://github.com/forkbombeu/pqspread/compare/v1.1.0...v1.2.0) (2024-12-03)
 
 
