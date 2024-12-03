@@ -117,6 +117,19 @@ SPDX-License-Identifier: AGPL-3.0-or-later
               };
               reader.readAsDataURL(file);
             },
+            getRawContent(event, field) {
+              const file = event.target.files[0];
+              if (!file) return;
+
+              const reader = new FileReader();
+              reader.onload = (e) => {
+                const arrayBuffer = e.target.result;
+                const rawString = new TextDecoder().decode(arrayBuffer);
+                this[field] = rawString;
+              };
+
+              reader.readAsArrayBuffer(file);
+            }
           }"
         >
           <nav>
@@ -169,7 +182,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         Scenario qp
                         Scenario ecdh
 
-                        Given I have a 'base64' named 'cleartext'
+                        Given I have a 'string' named 'cleartext'
                         and I have a 'mlkem512 public key'
 
                         When I create the mlkem512 kem for 'mlkem512 public key'
@@ -197,7 +210,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                       class="border px-4 py-2 focus:outline-none border-[#1C39BB]"
                       @click="downloaded = true; SC();"
                     >
-                      Download File
+                      Download PQS file
                     </a>
                   </template>
                 </li>
@@ -207,7 +220,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
               </ol>
             </div>
             <div
-              x-data="{secret_message: '', downloaded: false, decrypted: ''}"
+              x-data="{secret_message: '', downloaded: false, decrypted: false }"
               x-show="tab === 'decrypt'"
               class="timeline col-span-3"
             >
@@ -215,12 +228,12 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 <li class="border-b border-black pb-2 whitespace-nowrap">
                   <input
                     type="file"
-                    @change="convert($event, 'secret_message')"
+                    @change="getRawContent($event, 'secret_message')"
                   />
                 </li>
                 <template x-if="secret_message !== ''">
                   <pre x-show="false">
-                    <zencode-exec id="original_file" :d="atob(secret_message)" :k="LG('keyring')" storage="session">
+                    <zencode-exec id="original_file" :d="secret_message" :k="LG('keyring')" storage="session">
                       Scenario qp
                       Scenario ecdh
 
@@ -242,18 +255,24 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                   class="border-b border-black pb-2 whitespace-nowrap"
                   :class="{'completed': downloaded}"
                   x-show="decrypted"
-                  x-data="{ decrypted: SG('original_file') !== null }"
-                  x-init="window.addEventListener('storage', () => decrypted = SG('original_file') !== null);
-                          setInterval(() => decrypted = SG('original_file') !== null, 500);"
+                  x-data="{ decrypted: SG('original_file') !== null, of: null}"
+                  x-init="
+                    const updateDecrypted = () => { 
+                    if (SG('original_file')) of = JSON.parse(SG('original_file')).text; 
+                    decrypted = of !== null };
+                    updateDecrypted();
+                    window.addEventListener('storage', updateDecrypted);
+                    document.addEventListener('original_file-updated', updateDecrypted);
+                  "
                 >
                   <template x-if="decrypted">
                     <a
-                      :href="Download(JSON.parse(SG('original_file')).text)"
+                      :href="Download(of, true)"
                       download="decrypted.file"
                       class="border px-4 py-2 focus:outline-none border-[#1C39BB]"
                       @click="downloaded = true; SC();"
                     >
-                      Download File
+                      Download decrypted file
                     </a>
                   </template>
                 </li>

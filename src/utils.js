@@ -12,7 +12,10 @@ const G = (storage, key) => {
     return value;
   }
 };
-export const SS = (k, v) => S(window.sessionStorage, k, v);
+export const SS = (k, v) => {
+  S(window.sessionStorage, k, v);
+  document.dispatchEvent(new Event(k + "-updated"));
+};
 export const SG = (k) => G(window.sessionStorage, k);
 export const SC = () => window.sessionStorage.clear();
 export const LS = (k, v) => {
@@ -30,7 +33,14 @@ export const stringify = (obj) => {
   }
 };
 
-export const download = (content) => {
+export const download = (content, decode = false) => {
+  if (decode) {
+    const byteCharacters = atob(content);
+    const byteNumbers = new Array(byteCharacters.length)
+      .fill(null)
+      .map((_, i) => byteCharacters.charCodeAt(i));
+    content = new Uint8Array(byteNumbers);
+  }
   const blob = new Blob([content], { type: "application/octet-stream" });
   return URL.createObjectURL(blob);
 };
