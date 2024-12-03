@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/forkbombeu/pqspread/compare/v1.1.0...v1.2.0) (2024-12-03)
+
+
+### Features
+
+* artifact attestations to establish provenance for builds ([39046af](https://github.com/forkbombeu/pqspread/commit/39046aff866a2cfe102892d487c42c9a3acd5d01))
+
 # [1.1.0](https://github.com/forkbombeu/pqspread/compare/v1.0.3...v1.1.0) (2024-12-03)
 
 
