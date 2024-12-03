@@ -1,0 +1,17 @@
+version = 1
+
+[[annotations]]
+path = [
+  "package.json",
+]
+SPDX-FileCopyrightText = "2024 The Forkbomb Company <info@forkbomb.eu>"
+SPDX-License-Identifier = "AGPL-3.0-or-later"
+
+[[annotations]]
+path = [
+  "VERSION",
+  "bun.lockb",
+  "contracts/data.json"
+]
+SPDX-FileCopyrightText = "NONE"
+SPDX-License-Identifier = "CC0-1.0"
