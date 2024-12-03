@@ -40,7 +40,7 @@ jobs:
       - run: bun add -D @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/git @semantic-release/github
       - name: Calculate release version
         run: |
-          VERSION=$(npx semantic-release --dry-run --no-ci | grep -Po '(?<=The next release version is ).*')
+          VERSION=$(npx semantic-release --dry-run | grep -Po '(?<=The next release version is ).*')
           echo "$VERSION" > VERSION
       - run: bun run build
       - run: cp dist/index.html pqspread.html
