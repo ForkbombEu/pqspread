@@ -32,7 +32,16 @@ jobs:
       - uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest
+      - uses: actions/setup-node@v3
+        with:
+          node-version: latest
       - run: bun install
+      - run: bun add -g semantic-release
+      - run: bun add -D @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/git @semantic-release/github
+      - name: Calculate release version
+        run: |
+          VERSION=$(npx semantic-release --dry-run --no-ci | grep -Po '(?<=The next release version is ).*')
+          echo "$VERSION" > VERSION
       - run: bun run build
       - run: cp dist/index.html pqspread.html
       - uses: actions/upload-pages-artifact@v3
@@ -43,11 +52,6 @@ jobs:
           subject-path: pqspread.html
       - uses: actions/deploy-pages@v4
         id: deployment
-      - run: bun add -g semantic-release
-      - run: bun add -D @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/git @semantic-release/github
-      - uses: actions/setup-node@v3
-        with:
-          node-version: latest
       - run: semantic-release 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
