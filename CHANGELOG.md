@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/forkbombeu/pqspread/compare/v1.3.0...v1.3.1) (2024-12-03)
+
+
+### Bug Fixes
+
+* replace unsafe atob with proper base64 decoding ([#16](https://github.com/forkbombeu/pqspread/issues/16)) ([d0c52bb](https://github.com/forkbombeu/pqspread/commit/d0c52bb13a65e9670a3d5da1231649a00a740b86))
+
 # [1.3.0](https://github.com/forkbombeu/pqspread/compare/v1.2.0...v1.3.0) (2024-12-03)
 
 
