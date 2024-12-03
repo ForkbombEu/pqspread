@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 The Forkbomb Company
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 ## [1.0.3](https://github.com/forkbombeu/pqspread/compare/v1.0.2...v1.0.3) (2024-12-02)
 
 
