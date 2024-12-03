@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 The Forkbomb Company
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 # input to upload is cleartext (file to encrypt) and the public key of
 # recipient to which we are sending the encrypted file
 # {

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 The Forkbomb Company
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 NODE_MODULES = node_modules
 PACKAGE_JSON = package.json
 BUN_LOCK = bun.lockb
