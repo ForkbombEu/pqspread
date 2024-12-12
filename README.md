@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 The Forkbomb Company
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 # PQSpread
 
 Serveless (and offline) encrypt and exchange files using asymetric PQC. Works by opening a single html file in the browser, download from the [releases](https://github.com/ForkbombEu/pqspread/releases) and double click on it!
