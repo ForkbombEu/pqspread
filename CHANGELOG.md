@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/forkbombeu/pqspread/compare/v1.4.0...v1.4.1) (2024-12-13)
+
+
+### Bug Fixes
+
+* set correct package manager for security updates ([97c0d6f](https://github.com/forkbombeu/pqspread/commit/97c0d6fb08c126860e7b99eeae68ead60e267141))
+
 # [1.4.0](https://github.com/forkbombeu/pqspread/compare/v1.3.1...v1.4.0) (2024-12-13)
 
 
