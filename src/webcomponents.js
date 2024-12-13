@@ -6,6 +6,15 @@
 import { zencode_exec } from "zenroom";
 import { SS, LS, stringify } from "./utils";
 
+function escapeHtml(unsafe) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 export class Zencode extends HTMLElement {
   constructor() {
     super();
@@ -52,9 +61,9 @@ export class BrutalistCard extends HTMLElement {
   }
 
   render() {
-    const title = this.getAttribute("title") || "";
-    const content = this.getAttribute("content") || "";
-    const description = this.getAttribute("description") || "";
+    const title = escapeHtml(this.getAttribute("title") || "");
+    const content = escapeHtml(this.getAttribute("content") || "");
+    const description = escapeHtml(this.getAttribute("description") || "");
 
     const isHttps = window.location.protocol === "https:";
 
