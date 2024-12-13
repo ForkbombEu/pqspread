@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/forkbombeu/pqspread/compare/v1.3.1...v1.4.0) (2024-12-13)
+
+
+### Features
+
+* security periodic updates deps ([54ff2cd](https://github.com/forkbombeu/pqspread/commit/54ff2cdf43c63103eebbd5a858f4758bd3f42078))
+
 ## [1.3.1](https://github.com/forkbombeu/pqspread/compare/v1.3.0...v1.3.1) (2024-12-03)
 
 
