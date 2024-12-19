@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite --open",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postbuild": "cp dist/index.html capacitor-app/public/index.html"
   },
   "devDependencies": {
     "unocss": "^0.65.0",

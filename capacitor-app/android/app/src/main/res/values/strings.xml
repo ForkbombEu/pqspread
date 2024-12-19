@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">PQSpread</string>
+    <string name="title_activity_main">PQSpread</string>
+    <string name="package_name">com.forkbombeu.pqspread</string>
+    <string name="custom_url_scheme">com.forkbombeu.pqspread</string>
+</resources>

@@ -1,0 +1,17 @@
+{
+  "name": "pqspread",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@capacitor/android": "^6.2.0",
+    "@capacitor/cli": "^6.2.0",
+    "@capacitor/ios": "^6.2.0",
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@capacitor/core": "^6.2.0"
+  }
+}
