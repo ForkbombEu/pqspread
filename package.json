@@ -17,6 +17,6 @@
     "@fontsource-variable/jetbrains-mono": "^5.1.1",
     "@unocss/reset": "^0.65.0",
     "alpinejs": "^3.14.6",
-    "zenroom": "^4.46.1"
+    "zenroom": "^5.10.2"
   }
 }
