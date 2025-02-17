@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/forkbombeu/pqspread/compare/v1.4.1...v1.4.2) (2025-02-17)
+
+
+### Bug Fixes
+
+* add missing reuse header ([ddea66c](https://github.com/forkbombeu/pqspread/commit/ddea66c09a38427ef7bc91b6f17c219f51e53dff))
+
 ## [1.4.1](https://github.com/forkbombeu/pqspread/compare/v1.4.0...v1.4.1) (2024-12-13)
 
 
