@@ -25,7 +25,7 @@ You can use PQSpread online by visiting [this link](https://forkbomb.eu/pqspread
 
 ### Offline Mode
 
-For offline and paranoid mode, download the single HTML file from [GitHub](https://github.com/forkbombeu/pqspread) and run it on your machine.
+For offline and paranoid mode, download the single HTML file from [GitHub](https://github.com/forkbombeu/pqspread/releases) and run it on your machine.
 
 ## How to Use
 
