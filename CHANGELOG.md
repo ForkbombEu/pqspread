@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/forkbombeu/pqspread/compare/v1.4.2...v1.5.0) (2025-02-23)
+
+
+### Features
+
+* pqspread fix link ([#23](https://github.com/forkbombeu/pqspread/issues/23)) ([eb0c0cd](https://github.com/forkbombeu/pqspread/commit/eb0c0cdef8fb6975ceeaf6abe4f1020e0e093382))
+
 ## [1.4.2](https://github.com/forkbombeu/pqspread/compare/v1.4.1...v1.4.2) (2025-02-17)
 
 
