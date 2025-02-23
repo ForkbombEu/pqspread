@@ -94,6 +94,7 @@ export class ZencodeWrapper extends HTMLElement {
 
     this.input = document.createElement("input");
     this.input.type = "file";
+    this.input.id = "skupload";
     this.input.addEventListener("change", (event) => this.handleFileUpload(event));
 
     this.zencodeElement = document.createElement("zencode-exec");
