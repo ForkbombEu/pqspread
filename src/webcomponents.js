@@ -33,6 +33,7 @@ export class Zencode extends HTMLElement {
     const storage = this.getAttribute("storage") || "session";
     const id = this.getAttribute("id");
     const script = this.textContent.trim();
+    if (!script) return;
     const data = stringify(this.getAttribute("d"));
     const keys = stringify(this.getAttribute("k"));
     const params = {};
@@ -92,3 +93,60 @@ export class BrutalistCard extends HTMLElement {
 }
 
 customElements.define("brutalist-card", BrutalistCard);
+
+export class ZencodeWrapper extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+
+    this.container = document.createElement("div");
+
+    this.input = document.createElement("input");
+    this.input.type = "file";
+    this.input.id = "skupload";
+    this.input.addEventListener("change", (event) => this.handleFileUpload(event));
+
+    this.zencodeElement = document.createElement("zencode-exec");
+    this.script = this.textContent.trim();
+
+    this.container.appendChild(this.input);
+    this.container.appendChild(this.zencodeElement);
+    this.shadowRoot.appendChild(this.container);
+
+    this.pendingAttributes = {};
+  }
+
+  static get observedAttributes() {
+    return ["k", "storage", "id"];
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    this.zencodeElement.setAttribute(name, newValue);
+  }
+
+  handleFileUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    const oldKeyring = JSON.stringify(LG("keyring"));
+    reader.onload = (e) => {
+      try {
+        const uploadedKey = JSON.parse(e.target.result);
+        if (!uploadedKey.keyring || !uploadedKey.keyring.mlkem512) {
+          throw new Error('Keyring must be of the form {"keyring":{"mlkem512":"..."}}');
+        }
+        localStorage.removeItem("keyring");
+        this.zencodeElement.setAttribute("d", JSON.stringify(uploadedKey));
+        this.zencodeElement.textContent = this.script;
+        this.zencodeElement.render();
+      } catch (error) {
+        localStorage.setItem("keyring", oldKeyring);
+        console.error("Invalid keyring:", error);
+      }
+    };
+    reader.readAsText(file);
+  }
+}
+
+customElements.define("zencode-wrapper", ZencodeWrapper);

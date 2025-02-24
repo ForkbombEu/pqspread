@@ -1,3 +1,17 @@
+## [1.6.1](https://github.com/forkbombeu/pqspread/compare/v1.6.0...v1.6.1) (2025-02-23)
+
+
+### Bug Fixes
+
+* improve the labels for sk import/export ([#42](https://github.com/forkbombeu/pqspread/issues/42)) ([ef0fca4](https://github.com/forkbombeu/pqspread/commit/ef0fca4b0306a5fdbc44aa68ef7dbd7594b57e05))
+
+# [1.6.0](https://github.com/forkbombeu/pqspread/compare/v1.5.0...v1.6.0) (2025-02-23)
+
+
+### Features
+
+* add button to download and upload a keyring ([#39](https://github.com/forkbombeu/pqspread/issues/39)) ([3d39a32](https://github.com/forkbombeu/pqspread/commit/3d39a32a0b1d397cdb6cc61e95368483909f72a1))
+
 # [1.5.0](https://github.com/forkbombeu/pqspread/compare/v1.4.2...v1.5.0) (2025-02-23)
 
 

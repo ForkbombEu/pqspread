@@ -24,7 +24,9 @@ PQSpread is a quantum-safe file encryption and decryption tool that leverages th
 You can use PQSpread online by visiting [this link](https://forkbomb.eu/pqspread).
 
 ### Offline Mode
-
+```sh
+curl -sLO https://github.com/ForkbombEu/pqspread/releases/latest/download/pqspread.html
+```
 For offline and paranoid mode, download the single HTML file from [GitHub](https://github.com/forkbombeu/pqspread) and run it on your machine.
 
 ## How to Use

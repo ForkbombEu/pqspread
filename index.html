@@ -300,6 +300,34 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 >
                 </brutalist-card>
               </template>
+
+              <template x-if="keyring !== null">
+                <button
+                  class="border px-4 py-2 focus:outline-none border-[#1C39BB] bg-[#1C39BB] text-white"
+                  @click="
+                    const mlkemKey = JSON.parse(keyring).keyring;
+                    const blob = new Blob([JSON.stringify({keyring:mlkemKey})], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'keyring.json';
+                    a.click();
+                    URL.revokeObjectURL(url);
+                  "
+                >
+                  Export your secret key
+                </button>
+              </template>
+              <label for="skupload">Import your secret key:</label>
+              <zencode-wrapper id="keyring" storage="local">
+                  Scenario qp
+                  Given I have a 'keyring'
+                  When I create the mlkem512 public key
+                  And I create the hash of 'mlkem512 public key'
+                  Then print 'mlkem512_public_key'
+                  And print the 'hash' as 'base58'
+                  And print keyring
+              </zencode-wrapper>
             </div>
           </div>
         </div>
@@ -309,3 +337,4 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
+
