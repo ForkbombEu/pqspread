@@ -1,0 +1,10 @@
+{
+  "start_url": "https://forkbombeu.github.io/pqspread",
+  "name": "PQSpread",
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "short_name": "PQSpread",
+  "description": "Simple Post Quantum File Encryption",
+  "scope": "Simple Post Quantum File Encryption",
+  "lang": "en"
+}
