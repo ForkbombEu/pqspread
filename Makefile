@@ -20,6 +20,7 @@ $(NODE_MODULES): $(PACKAGE_JSON) $(BUN_LOCK)
 ## Development
 build: $(NODE_MODULES) ## 🔨 Build to a single .html file
 	bun run build
+	cd ./electron && bun make
 
 dev: $(NODE_MODULES) ## 🎮 Run the project and serve with livereload 
 	bun run dev
