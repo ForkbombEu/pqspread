@@ -34,7 +34,7 @@ export default defineConfig({
           `
           <script>
             if ('serviceWorker' in navigator) {
-              const swCode = \`${serviceWorkerCode.replace(/`/g, '\\`')}\`;
+              const swCode = \`${serviceWorkerCode.replace(/\\/g, '\\\\').replace(/`/g, '\\`')}\`;
               const blob = new Blob([swCode], { type: 'application/javascript' });
               const swURL = URL.createObjectURL(blob);
               navigator.serviceWorker.register(swURL)
